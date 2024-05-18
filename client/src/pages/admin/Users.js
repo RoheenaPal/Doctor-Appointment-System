@@ -4,7 +4,7 @@ import Layout from './../../components/Layout'
 import { Table } from 'antd'
 
 const Users = () => {
-    const { users, setUsers } = useState([])
+    const [users, setUsers] = useState([])
 
     // get users
     const getUsers = async () => {
