@@ -1,3 +1,4 @@
+const appointmentModel = require("../models/appointmentModel")
 const doctorModel = require("../models/doctorModel")
 
 // get single doctor's information
@@ -32,8 +33,41 @@ const getDoctorByIdController = async (req, res) => {
     }
     catch (error) {
         console.log(error)
-        res.status(500).send({ success: false, message: "Error in gettig doctor's information", error })
+        res.status(500).send({ success: false, message: "Error in getting doctor's information", error })
     }
 }
 
-module.exports = { getDoctorInfoController, updateProfileController, getDoctorByIdController }
+const doctorAppointmentsController = async (req, res) => {
+    try {
+        const doctor = await doctorModel.findOne({ userId: req.body.userId })
+        const appointments = await appointmentModel.find({ doctorId: doctor._id })
+        res.status(200).send({ success: true, message: "Doctor's appointments fetched", data: appointments })
+    }
+    catch (error) {
+        res.status(500).send({ success: false, message: "Error in getting doctor's appointments", error })
+    }
+}
+
+const updateStatusController = async (req, res) => {
+    try {
+        const { appointmentsId, status } = req.body
+        const appointments = await appointmentModel.findByIdAndUpdate(appointmentsId, { status })
+        const user = await userModel.findOne({ _id: appointments.userId })
+        const notification = user.notification
+        notification.push({
+            type: "status-updated",
+            message: `Your appointment has been updated to ${status}`,
+            onCLickPath: "/doctor-appointments",
+        })
+        await user.save()
+        res.status(200).send({ success: true, message: "Appointment status updated" })
+    }
+    catch (error) {
+        res.status(500).send({ success: false, message: "Error in changing the appointment status", error })
+    }
+}
+
+module.exports = {
+    getDoctorInfoController, updateProfileController, getDoctorByIdController,
+    doctorAppointmentsController, updateStatusController
+}

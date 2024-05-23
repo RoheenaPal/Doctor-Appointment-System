@@ -178,28 +178,31 @@ const bookingAvailabilityController = async (req, res) => {
             },
         })
         if (appointments.length > 0) {
-            return res.status(200).send({
-                message: "Appointments not availibale at this time",
-                success: true,
-            })
-        } else {
-            return res.status(200).send({
-                success: true,
-                message: "Appointments available",
-            })
+            return res.status(200).send({ message: "Appointments not availibale at this time", success: true })
         }
-    } catch (error) {
+        else {
+            return res.status(200).send({ success: true, message: "Appointments available", })
+        }
+    }
+    catch (error) {
         console.log(error)
-        res.status(500).send({
-            success: false,
-            error,
-            message: "Error In Booking",
-        })
+        res.status(500).send({ success: false, error, message: "Error in booking" })
+    }
+}
+
+const userAppointmentsController = async (req, res) => {
+    try {
+        const appointments = await appointmentModel.find({ userId: req.body.userId })
+        res.status(200).send({ success: true, message: "Users appointments fetched successfully", data: appointments })
+    }
+    catch (error) {
+        console.log(error)
+        res.status(500).send({ success: false, error, message: "Error in user appointments" })
     }
 }
 
 module.exports = {
     loginController, registerController, authController,
     applyDoctorController, getAllNotificationController, deleteAllNotificationController,
-    getAllDoctorsController, bookAppointmentController, bookingAvailabilityController
+    getAllDoctorsController, bookAppointmentController, bookingAvailabilityController, userAppointmentsController
 }

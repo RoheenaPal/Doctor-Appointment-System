@@ -3,7 +3,8 @@ const { loginController, registerController, authController,
     applyDoctorController, getAllNotificationController, deleteAllNotificationController,
     getAllDoctorsController,
     bookAppointmentController,
-    bookingAvailabilityController } = require("../controllers/userCtrl")
+    bookingAvailabilityController,
+    userAppointmentsController } = require("../controllers/userCtrl")
 const authMiddleware = require("../middlewares/authMiddleware")
 
 // router object
@@ -36,5 +37,8 @@ router.post("/book-appointment", authMiddleware, bookAppointmentController)
 
 // booking availability || post
 router.post("/booking-availability", authMiddleware, bookingAvailabilityController)
+
+// user appointments || get
+router.get("/user-appointments", authMiddleware, userAppointmentsController)
 
 module.exports = router
