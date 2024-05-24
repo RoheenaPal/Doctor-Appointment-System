@@ -115,26 +115,18 @@ const BookingPage = () => {
                             {doctors.timings && doctors.timings[1]}{" "}
                         </h4>
                         <div className="d-flex flex-column w-50">
-                            <DatePicker
-                                aria-required={"true"}
-                                className="m-2"
-                                format="DD-MM-YYYY"
+                            <DatePicker aria-required={"true"} className="m-2" format="DD-MM-YYYY"
                                 onChange={(value) => {
                                     setDate(moment(value).format("DD-MM-YYYY"))
                                 }}
                             />
-                            <TimePicker
-                                aria-required={"true"}
-                                format="HH:mm"
-                                className="mt-3"
+                            <TimePicker aria-required={"true"} format="HH:mm" className="mt-3"
                                 onChange={(value) => {
                                     setTime(moment(value).format("HH:mm"))
                                 }}
                             />
 
-                            <button
-                                className="btn btn-primary mt-2"
-                                onClick={handleAvailability}>
+                            <button className="btn btn-primary mt-2" onClick={handleAvailability} >
                                 Check Availability
                             </button>
 

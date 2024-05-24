@@ -23,6 +23,7 @@ const NotificationPage = () => {
             dispatch(hideLoading())
             if (res.data.success) {
                 message.success(res.data.message)
+                window.location.reload()
             } else {
                 message.error(res.data.message)
             }
@@ -45,6 +46,7 @@ const NotificationPage = () => {
             dispatch(hideLoading())
             if (res.data.success) {
                 message.success(res.data.message)
+                window.location.reload()
             } else {
                 message.error(res.data.message)
             }
@@ -62,12 +64,12 @@ const NotificationPage = () => {
             <Tabs>
                 <Tabs.TabPane tab="unRead" key={0}>
                     <div className="d-flex justify-content-end">
-                        <h4 className="p-2" onClick={handleMarkAllRead}>
+                        <h4 className="p-2 text-primary" style={{ cursor: "pointer" }} onClick={handleMarkAllRead}>
                             Mark All Read
                         </h4>
                     </div>
                     {user?.notification.map((notificationMsg) => (
-                        <div className="card" style={{ cursor: "pointer" }}>
+                        <div className="card">
                             <div className="card-text" onClick={() => navigate(notificationMsg.onClickPath)}>
                                 {notificationMsg.message}
                             </div>
